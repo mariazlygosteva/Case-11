@@ -7,7 +7,22 @@ import random
 import ru_local as ru
 
 
-def koch(n, a):
+def koch(n: int, a: float) -> None:
+    '''
+    Draws a Koch curve of a given order and size.
+
+    The Koch curve is a fractal curve that is constructed by recursively
+    dividing a segment into 3 parts and replacing the middle part with two
+    segments, forming an equilateral triangle.
+
+    Args:
+        n (int): The order of the curve (depth of recursion).
+        When n=0, a straight line is drawn.
+        a (float): The length of the initial segment.
+
+    Returns:
+        None
+    '''
     if n == 0:
         fd(a)
     else:
@@ -20,13 +35,40 @@ def koch(n, a):
         koch(n - 1, a / 3)
 
 
-def koch_snowflake(n, a):
-    for _ in range(3):
+def koch_snowflake(n: int, a: float) -> None:
+    '''
+    Draws a Koch snowflake from three Koch curves.
+
+    A Koch snowflake is a closed curve formed by three Koch curves,
+    connected in an equilateral triangle.
+
+    Args:
+        n (int): Snowflake order (recursion depth).
+        a (float): The side length of the original triangle.
+
+    Returns:
+        None
+    '''
+    for i in range(3):
         koch(n, a)
         rt(120)
 
 
-def tree(height, length, angle):
+def tree(height: int, length: float, angle: int) -> None:
+    '''
+    Draws a binary tree recursively.
+
+    The tree is built by recursive branching - each branch is divided
+    into two sub-branches at a given angle with decreasing length.
+
+    Args:
+        height (int): The height of the tree (the number of branching levels).
+        length (float): The length of the initial branch.
+        angle (int): The angle between the child branches.
+
+    Returns:
+        None
+    '''
     if height == 0:
         return
     else:
@@ -47,7 +89,24 @@ def tree(height, length, angle):
         pd()
 
 
-def mandala(depth, size):
+def mandala(depth: int, size: float) -> None:
+    '''
+    Draws a recursive mandala.
+
+    The mandala is constructed as a circular pattern with recursive elements.,
+    located in 8 directions.
+
+    Args:
+        depth (int): The depth of the recursion.
+        It is recommended to use values from 1 to 5.
+        size (float): The base size of the mandala.
+
+    Returns:
+        None
+
+    Note:
+        When depth=0, a simple circle is drawn.
+    '''
     if depth == 0:
         circle(size * 0.2)
     else:
@@ -58,7 +117,20 @@ def mandala(depth, size):
             lt(45)
 
 
-def rotating_squares(size, n):
+def rotating_squares(size: float, n: int) -> None:
+    '''
+    Draws rotating squares.
+
+    Squares are drawn recursively with decreasing size and rotation,
+    creating a spiral effect.
+
+    Args:
+        size (float): The size of the initial square.
+        n (int): The number of squares to draw.
+
+    Returns:
+        None
+    '''
     if n == 0:
         return
     for i in range(4):
@@ -71,7 +143,20 @@ def rotating_squares(size, n):
     rotating_squares(size * 0.9, n - 1)
 
 
-def recursive_squares(size, n):
+def recursive_squares(size: float, n: int) -> None:
+    '''
+    Draws recursive squares (Minkowski curve).
+
+    The Minkowski curve is a fractal curve that fills the space
+    by recursively dividing a square into smaller squares.
+
+    Args:
+        size (float): The size of the initial square.
+        n (int): The depth of recursion.
+
+    Returns:
+        None
+    '''
     if n == 0:
         fd(size)
         return
@@ -92,8 +177,23 @@ def recursive_squares(size, n):
         recursive_squares(size / 2, n - 1)
 
 
-def leha(size, n):
-    def l():
+def leha(size: float, n: int) -> None:
+    '''
+    Draws the fractal 'Lech' (letters LECH).
+
+    A special fractal that forms the letters L, E, X, and A in a recursive way.
+    Each letter is built from smaller versions of the fractal itself.
+
+    Args:
+        size (float): The size of the fractal.
+        n (int): The depth of recursion.
+
+    Returns:
+        None
+    '''
+
+    def draw_l() -> None:
+        '''Draws the letter L of the fractal.'''
         leha(size / 3, n - 1)
         rt(90)
         leha(size / 3, n - 1)
@@ -107,7 +207,8 @@ def leha(size, n):
         leha((((size / 3) ** 2) * 2) ** 0.5, n - 1)
         rt(-135)
 
-    def e():
+    def draw_e() -> None:
+        '''Draws the letter E of the fractal.'''
         leha(size / 3, n - 1)
         leha(size / 3, n - 1)
         rt(90)
@@ -126,7 +227,8 @@ def leha(size, n):
         leha(size / 3, n - 1)
         leha(size / 3, n - 1)
 
-    def h():
+    def draw_h() -> None:
+        '''Draws the letter X of the fractal.'''
         rt(-90)
         leha(size / 3, n - 1)
         leha(size / 3, n - 1)
@@ -158,7 +260,8 @@ def leha(size, n):
         rt(-90)
         leha(size / 3, n - 1)
 
-    def a():
+    def draw_a() -> None:
+        '''Draws the letter A of the fractal.'''
         rt(-90)
         leha(size / 3, n - 1)
         leha(size / 3, n - 1)
@@ -183,48 +286,87 @@ def leha(size, n):
         fd(size)
         return
     else:
-        l()
-        e()
-        h()
-        a()
+        draw_l()
+        draw_e()
+        draw_h()
+        draw_a()
 
 
-def ice(order, size):
+def ice_1(order: int, size: float) -> None:
+    '''
+    Draws the first version of the ice fractal.
+
+    The ice fractal mimics the shape of ice crystals with symmetrical branches.
+    The first option has a simpler structure with right angles.
+
+    Args:
+        order (int): The order of the fractal (the depth of recursion).
+        size (float): The length of the base segment.
+
+    Returns:
+        None
+    '''
     if order == 0:
         fd(size)
     else:
-        ice(order - 1, size / 2)
+        ice_1(order - 1, size / 2)
         lt(90)
-        ice(order - 1, size / 4)
+        ice_1(order - 1, size / 4)
         lt(180)
-        ice(order - 1, size / 4)
+        ice_1(order - 1, size / 4)
         lt(90)
-        ice(order - 1, size / 2)
+        ice_1(order - 1, size / 2)
 
 
-def ice2(order, size):
+def ice_2(order: int, size: float) -> None:
+    '''
+    Draws the second version of the ice fractal.
+
+    The second version of the ice fractal has a more complex structure.
+    with angles of 60 and 120 degrees, creating a more natural snowflake shape.
+
+    Args:
+        order (int): The order of the fractal (the depth of recursion).
+        size (float): The length of the base segment.
+
+    Returns:
+        None
+    '''
     if order == 0:
         fd(size)
     else:
-        ice2(order - 1, size / 2)
+        ice_2(order - 1, size / 2)
         x, y = position()
         heading_ = heading()
         lt(60)
-        ice2(order - 1, size / 4)
+        ice_2(order - 1, size / 4)
         pu()
         goto(x, y)
         setheading(heading_)
         pd()
         lt(120)
-        ice2(order - 1, size / 4)
+        ice_2(order - 1, size / 4)
         pu()
         goto(x, y)
         setheading(heading_)
         pd()
-        ice2(order - 1, size / 2)
+        ice_2(order - 1, size / 2)
 
 
-def levi(order, size):
+def levi(order: int, size: float) -> None:
+    '''
+    Draws a Levy curve.
+
+    The Levy curve is a fractal curve that is constructed by
+    sequential substitution of segments by two segments at an angle of 90 degrees.
+
+    Args:
+        order (int): The order of the curve (depth of recursion).
+        size (float): The length of the base segment.
+
+    Returns:
+        None
+    '''
     if order == 0:
         fd(size)
     else:
@@ -235,7 +377,21 @@ def levi(order, size):
         lt(45)
 
 
-def peano(a, n):
+def peano(a: float, n: int) -> None:
+    '''
+    Draws a Peano curve.
+
+    The Peano curve is a space-filling curve that
+    passes through each point of the square. This implementation represents
+    It represents one of the variants of the Peano curve.
+
+    Args:
+        a (float): The length of the base segment.
+        n (int): The depth of recursion.
+
+    Returns:
+        None
+    '''
     if n == 0:
         fd(a)
     else:
@@ -258,14 +414,38 @@ def peano(a, n):
         peano(a, n - 1)
 
 
-def wool_ball(min_radius):
+def wool_ball(min_radius: int) -> None:
+    '''
+    Draws a ball of wool with random colors.
+
+    Simulates the structure of a wool ball using recursive branching
+    and random angles to create a natural look. Each thread has
+    random color.
+
+    Args:
+        min_radius (float): The minimum branching radius.
+                           The recommended value is from 1 to 20.
+
+    Returns:
+        None
+    '''
     ROTATION = 15
     MIN_ANGLE = -400
     MAX_ANGLE = 400
     RANDOM_ANGLE = 10
     ANGLE_COUNT = 10
 
-    def draw_wool(x, y, r, angle, n):
+    def wool(x: float, y: float, r: float, angle: float, n: int) -> None:
+        '''
+        An auxiliary function for drawing a single strand of wool.
+
+        Args:
+            x (float): The initial X coordinate.
+            y (float): The initial Y coordinate.
+            r (float): The current branching radius.
+            angle (float): The current angle of the direction.
+            n (int): The nesting level for determining the line thickness.
+        '''
         if r <= min_radius:
             return
         ang_rad = math.radians(angle)
@@ -279,121 +459,179 @@ def wool_ball(min_radius):
         new_r = r * 0.8
         new_n = n - 1 if n > 0 else 0
         if angle + ROTATION < MAX_ANGLE:
-            new_angle = angle + ROTATION + random.uniform(-RANDOM_ANGLE, RANDOM_ANGLE)
-            draw_wool(x1, y1, new_r, new_angle, new_n)
+            new_angle = angle + ROTATION + random.uniform(-RANDOM_ANGLE,
+                                                          RANDOM_ANGLE)
+            wool(x1, y1, new_r, new_angle, new_n)
         if angle - ROTATION > MIN_ANGLE:
-            new_angle = angle - ROTATION - random.uniform(-RANDOM_ANGLE, RANDOM_ANGLE)
-            draw_wool(x1, y1, new_r, new_angle, new_n)
+            new_angle = angle - ROTATION - random.uniform(-RANDOM_ANGLE,
+                                                          RANDOM_ANGLE)
+            wool(x1, y1, new_r, new_angle, new_n)
 
-    R = 50
+    r_val = 50
     center_x, center_y = 0, 0
-    while R > 0:
+    while r_val > 0:
         color = (random.random(), random.random(), random.random())
         pencolor(color)
         for i in range(ANGLE_COUNT):
             angle = (360 / ANGLE_COUNT) * i
-            draw_wool(center_x, center_y, R, angle, 1)
-        R -= 2
+            wool(center_x, center_y, r_val, angle, 1)
+        r_val -= 2
 
 
-def main():
-    tracer(0, 0)
+def set_random_color() -> None:
+    '''
+    Sets a random drawing color.
 
-    print('Доступные фракталы:')
-    print('1. Кривая Коха')
-    print('2. Двоичное дерево')
-    print('3. Кривая Маша (мандала)')
-    print('4. Квадрат')
-    print('5. Кривая Минковского')
-    print('6. Фрактал Леха')
-    print('7. Ледяной фрактал (1)')
-    print('8. Кривая Леви')
-    print('9. Кривая Полина (Пеано)')
-    print('10. Снежинка Коха')
-    print('11. Ледяной фрактал (2)')
-    print('12. Комок шерсти')
+    Generates a random RGB color and sets it as the pen color.
 
-    choice = input('Выберите фрактал (1-12): ')
+    Returns:
+        None
+    '''
+    pencolor(random.random(), random.random(), random.random())
 
-    if choice == '1':
-        order = int(input('Глубина рекурсии: '))
-        size = int(input('Длина стороны: '))
-        pu()
-        goto(-100, 0)
-        pd()
-        koch(order, size)
 
-    elif choice == '2':
-        height = int(input('Высота дерева: '))
-        angle = int(input('Величина угла: '))
-        pu()
-        goto(0, -200)
-        pd()
-        lt(90)
-        tree(height, 100, angle)
+def main() -> None:
+    '''
+    The main function of the program.
 
-    elif choice == '3':
-        depth = int(input('Глубина рекурсии: '))
-        size = int(input('Длина стороны: '))
-        bgcolor('black')
-        pencolor('white')
-        pu()
-        goto(0, -size / 4)
-        pd()
-        mandala(depth, size)
+    Provides a user interface for selecting and rendering different fractals.
+    Requests parameters from the user and draws the selected fractal in the center
+    of the screen.
 
-    elif choice == '4':
-        n = int(input('Количество квадратов: '))
-        rotating_squares(100, n)
+    Returns:
+        None
 
-    elif choice == '5':
-        n = int(input('Глубина рекурсии: '))
-        recursive_squares(50, n)
+    Features:
+        - Support for 12 different fractals
+        - Centering on the screen
+        - Random colors for most fractals
+        - Setting parameters for each fractal
+    '''
+    tracer(0)
+    screen = getscreen()
+    screen.bgcolor('black')
 
-    elif choice == '6':
-        n = int(input('Глубина рекурсии: '))
-        pu()
-        goto(-300, 0)
-        pd()
-        leha(20, n)
+    print(ru.AVAILABLE)
+    print(ru.KOHA)
+    print(ru.SNOWFLAKE)
+    print(ru.TREE)
+    print(ru.LUMP)
+    print(ru.SQUARE)
+    print(ru.MINKOVSKY)
+    print(ru.LEVI)
+    print(ru.ICE_1)
+    print(ru.ICE_2)
+    print(ru.LEHA)
+    print(ru.PEANO)
+    print(ru.MANDALA)
 
-    elif choice == '7':
-        n = int(input('Глубина рекурсии: '))
-        a = int(input('Длина стороны: '))
-        ice(n, a)
+    choice = input(ru.CHOOSE)
 
-    elif choice == '8':
-        n = int(input('Глубина рекурсии: '))
-        a = int(input('Длина стороны: '))
-        levi(n, a)
+    match choice:
+        case '1':
+            order = int(input(ru.DEPTH_1))
+            size = int(input(ru.LENGTH))
+            set_random_color()
+            pu()
+            goto(-150, 0)
+            pd()
+            koch(order, size)
 
-    elif choice == '9':
-        n = int(input('Глубина рекурсии: '))
-        a = int(input('Длина стороны: '))
-        peano(a, n)
+        case '2':
+            order = int(input(ru.DEPTH_1))
+            size = int(input(ru.LENGTH))
+            set_random_color()
+            pu()
+            goto(-100, 60)
+            pd()
+            koch_snowflake(order, size)
 
-    elif choice == '10':
-        order = int(input('Глубина рекурсии: '))
-        size = int(input('Длина стороны: '))
-        pu()
-        goto(-150, 90)
-        pd()
-        koch_snowflake(order, size)
+        case '3':
+            height = int(input(ru.HEIGHT))
+            angle = int(input(ru.CORNER))
+            set_random_color()
+            pu()
+            goto(0, -100)
+            setheading(90)
+            pd()
+            tree(height, 100, angle)
 
-    elif choice == '11':
-        n = int(input('Глубина рекурсии: '))
-        a = int(input('Длина стороны: '))
-        ice2(n, a)
+        case '4':
+            min_radius = int(input(ru.RADIUS))
+            wool_ball(min_radius)
 
-    elif choice == '12':
-        min_radius = float(input("Введите минимальный радиус (от 1 до 20): "))
-        if min_radius < 1 or min_radius > 20:
-            min_radius = 8
-        wool_ball(min_radius)
+        case '5':
+            n = int(input(ru.QUANTITY))
+            set_random_color()
+            pu()
+            goto(-50, 50)
+            pd()
+            rotating_squares(100, n)
 
-    else:
-        print('Неверный выбор')
-        return
+        case '6':
+            n = int(input(ru.DEPTH_1))
+            set_random_color()
+            pu()
+            goto(-300, 0)
+            pd()
+            recursive_squares(75, n)
+
+        case '7':
+            n = int(input(ru.DEPTH_1))
+            a = int(input(ru.LENGTH))
+            set_random_color()
+            pu()
+            goto(-150, -50)
+            pd()
+            levi(n, a)
+
+        case '8':
+            n = int(input(ru.DEPTH_1))
+            a = int(input(ru.LENGTH))
+            set_random_color()
+            pu()
+            goto(-150, 0)
+            pd()
+            ice_1(n, a)
+
+        case '9':
+            n = int(input(ru.DEPTH_1))
+            a = int(input(ru.LENGTH))
+            set_random_color()
+            pu()
+            goto(-150, 0)
+            pd()
+            ice_2(n, a)
+
+        case '10':
+            n = int(input(ru.DEPTH_1))
+            set_random_color()
+            pu()
+            goto(-370, 0)
+            pd()
+            leha(15, n)
+
+        case '11':
+            n = int(input(ru.DEPTH_1))
+            a = int(input(ru.LENGTH))
+            set_random_color()
+            pu()
+            goto(-130, 0)
+            pd()
+            peano(a, n)
+
+        case '12':
+            depth = int(input(ru.DEPTH_2))
+            size = int(input(ru.LENGTH))
+            set_random_color()
+            pu()
+            goto(0, 0)
+            pd()
+            mandala(depth, size)
+
+        case _:
+            print(ru.ERROR)
+            return
 
     update()
     done()
