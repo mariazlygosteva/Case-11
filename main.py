@@ -414,70 +414,6 @@ def peano(a: float, n: int) -> None:
         peano(a, n - 1)
 
 
-def wool_ball(min_radius: int) -> None:
-    '''
-    Draws a ball of wool with random colors.
-
-    Simulates the structure of a wool ball using recursive branching
-    and random angles to create a natural look. Each thread has
-    random color.
-
-    Args:
-        min_radius (float): The minimum branching radius.
-                           The recommended value is from 1 to 20.
-
-    Returns:
-        None
-    '''
-    ROTATION = 15
-    MIN_ANGLE = -400
-    MAX_ANGLE = 400
-    RANDOM_ANGLE = 10
-    ANGLE_COUNT = 10
-
-    def wool(x: float, y: float, r: float, angle: float, n: int) -> None:
-        '''
-        An auxiliary function for drawing a single strand of wool.
-
-        Args:
-            x (float): The initial X coordinate.
-            y (float): The initial Y coordinate.
-            r (float): The current branching radius.
-            angle (float): The current angle of the direction.
-            n (int): The nesting level for determining the line thickness.
-        '''
-        if r <= min_radius:
-            return
-        ang_rad = math.radians(angle)
-        x1 = x + r * math.cos(ang_rad)
-        y1 = y + r * math.sin(ang_rad)
-        pensize(max(1, n))
-        pu()
-        goto(x, y)
-        pd()
-        goto(x1, y1)
-        new_r = r * 0.8
-        new_n = n - 1 if n > 0 else 0
-        if angle + ROTATION < MAX_ANGLE:
-            new_angle = angle + ROTATION + random.uniform(-RANDOM_ANGLE,
-                                                          RANDOM_ANGLE)
-            wool(x1, y1, new_r, new_angle, new_n)
-        if angle - ROTATION > MIN_ANGLE:
-            new_angle = angle - ROTATION - random.uniform(-RANDOM_ANGLE,
-                                                          RANDOM_ANGLE)
-            wool(x1, y1, new_r, new_angle, new_n)
-
-    r_val = 50
-    center_x, center_y = 0, 0
-    while r_val > 0:
-        color = (random.random(), random.random(), random.random())
-        pencolor(color)
-        for i in range(ANGLE_COUNT):
-            angle = (360 / ANGLE_COUNT) * i
-            wool(center_x, center_y, r_val, angle, 1)
-        r_val -= 2
-
-
 def set_random_color() -> None:
     '''
     Sets a random drawing color.
@@ -515,7 +451,6 @@ def main() -> None:
     print(ru.KOHA)
     print(ru.SNOWFLAKE)
     print(ru.TREE)
-    print(ru.LUMP)
     print(ru.SQUARE)
     print(ru.MINKOVSKY)
     print(ru.LEVI)
@@ -557,10 +492,6 @@ def main() -> None:
             tree(height, 100, angle)
 
         case '4':
-            min_radius = int(input(ru.RADIUS))
-            wool_ball(min_radius)
-
-        case '5':
             n = int(input(ru.QUANTITY))
             set_random_color()
             pu()
@@ -568,7 +499,7 @@ def main() -> None:
             pd()
             rotating_squares(100, n)
 
-        case '6':
+        case '5':
             n = int(input(ru.DEPTH_1))
             set_random_color()
             pu()
@@ -576,7 +507,7 @@ def main() -> None:
             pd()
             recursive_squares(75, n)
 
-        case '7':
+        case '6':
             n = int(input(ru.DEPTH_1))
             a = int(input(ru.LENGTH))
             set_random_color()
@@ -585,7 +516,7 @@ def main() -> None:
             pd()
             levi(n, a)
 
-        case '8':
+        case '7':
             n = int(input(ru.DEPTH_1))
             a = int(input(ru.LENGTH))
             set_random_color()
@@ -594,7 +525,7 @@ def main() -> None:
             pd()
             ice_1(n, a)
 
-        case '9':
+        case '8':
             n = int(input(ru.DEPTH_1))
             a = int(input(ru.LENGTH))
             set_random_color()
@@ -603,7 +534,7 @@ def main() -> None:
             pd()
             ice_2(n, a)
 
-        case '10':
+        case '9':
             n = int(input(ru.DEPTH_1))
             set_random_color()
             pu()
@@ -611,7 +542,7 @@ def main() -> None:
             pd()
             leha(15, n)
 
-        case '11':
+        case '10':
             n = int(input(ru.DEPTH_1))
             a = int(input(ru.LENGTH))
             set_random_color()
@@ -620,7 +551,7 @@ def main() -> None:
             pd()
             peano(a, n)
 
-        case '12':
+        case '11':
             depth = int(input(ru.DEPTH_2))
             size = int(input(ru.LENGTH))
             set_random_color()
